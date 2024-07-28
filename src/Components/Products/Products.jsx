@@ -1,27 +1,26 @@
 import React from 'react';
-import {Grid, Typography} from '@mui/material';
+import { Grid, Typography } from '@mui/material';
 
-import Product from './Product/Product'
-import useStyles from './styles'
-import { red } from '@mui/material/colors';
+import Product from './Product/Product';
+import useStyles from './styles';
 
+const Products = ({ products, onAddToCart }) => {
+  const classes = useStyles();
 
-const Products = ({products, onAddToCart}) => {
-    const classes = useStyles();
   return (
     <>
-    <main className={classes.content}>
-        <div className={classes.toolbar}/>
-        <Grid container justify="center" spacing={4}>
-            {products.map((product) => (
-                <Grid item key={product.id}  xs={12} sm={6} md={4} lg={3}>
-                    <Product product = {product} onAddToCart={onAddToCart}/>
-                </Grid>
-            ))}
+      <main className={classes.content}>
+        <div className={classes.toolbar} />
+        <Grid container justifyContent="center" spacing={4}>
+          {products.map((product) => (
+            <Grid item key={product.id} xs={12} sm={6} md={4} lg={3}>
+              <Product product={product} onAddToCart={onAddToCart} />
+            </Grid>
+          ))}
         </Grid>
-    </main>
+      </main>
     </>
-  )
+  );
 }
 
-export default Products
+export default Products;

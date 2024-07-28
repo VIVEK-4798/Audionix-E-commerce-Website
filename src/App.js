@@ -10,7 +10,7 @@ function App() {
   const [products, setProducts] = useState([]);
   const [cart, setCart] = useState({ total_items: 0, line_items: [] });
   const [loading, setLoading] = useState(true);
-  const [order, setOrder ] = useState({});
+  const [order, setOrder] = useState({});
   const [errorMessage, setErrorMessage] = useState('');
 
   const fetchProducts = async () => {
@@ -47,21 +47,18 @@ function App() {
 
   const refreshCart = async () => {
     const newCart = await commerce.cart.refresh();
-
     setCart(newCart);
-  }
+  };
 
   const handleCaptureCheckout = async (checkoutTokenId, newOrder) => {
-    try{
+    try {
       const incomingOrder = await commerce.checkout.capture(checkoutTokenId, newOrder);
-
       setOrder(incomingOrder);
       refreshCart();
-    }
-    catch (error) {
+    } catch (error) {
       setErrorMessage(error.data.error.message);
     }
-  }
+  };
 
   useEffect(() => {
     fetchProducts();
@@ -93,13 +90,15 @@ function App() {
           />
           <Route
             exact
-            path="/checkout" 
-            element={<Checkout 
-              cart = {cart} 
-              order = {order}
-              onCaptureCheckout={handleCaptureCheckout}
-              error={errorMessage}                
-               />}
+            path="/checkout"
+            element={
+              <Checkout
+                cart={cart}
+                order={order}
+                onCaptureCheckout={handleCaptureCheckout}
+                error={errorMessage}
+              />
+            }
           />
         </Routes>
       </ThemeProvider>

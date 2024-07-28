@@ -36,11 +36,30 @@ const CartItem = ({ item, onUpdateCartQty, onRemoveFromCart }) => {
       </CustomCardContent>
       <CustomCardActions>
         <CustomButtons>
-          <Button type='button' size='small' onClick={() => onUpdateCartQty(item.id, item.quantity - 1)}>-</Button>
+          <Button
+            type='button'
+            size='small'
+            onClick={() => onUpdateCartQty(item.id, item.quantity - 1)}
+          >
+            -
+          </Button>
           <Typography>{quantity}</Typography>
-          <Button type='button' size='small' onClick={() => onUpdateCartQty(item.id, item.quantity + 1)}>+</Button>
+          <Button
+            type='button'
+            size='small'
+            onClick={() => onUpdateCartQty(item.id, item.quantity + 1)}
+          >
+            +
+          </Button>
         </CustomButtons>
-        <Button type='button' variant='contained' color='secondary' onClick={() => onRemoveFromCart(item.id)}>Remove</Button>
+        <Button
+          type='button'
+          variant='contained'
+          color='secondary'
+          onClick={() => onRemoveFromCart(item.id)}
+        >
+          Remove
+        </Button>
       </CustomCardActions>
     </Card>
   );

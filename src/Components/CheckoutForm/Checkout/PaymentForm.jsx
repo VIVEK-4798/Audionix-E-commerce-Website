@@ -1,14 +1,21 @@
 import React from 'react';
 import { Typography, Button, Divider } from '@mui/material';
-import { Elements, CardElement, ElementsConsumer } from '@stripe/react-stripe-js';
+import { Elements, CardElement, useElements, useStripe } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
 import Review from './Review';
 
 const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLIC_KEY);
 
-const PaymentForm = ({ checkoutToken, shippingData, backStep, onCaptureCheckout, nextStep, timeout }) => {
+const PaymentForm = ({ checkoutToken, shippingData, backStep, onCaptureCheckout, nextStep }) => {
+  const elements = useElements();
+  const stripe = useStripe();
+
   const handleSubmit = async (event) => {
     event.preventDefault();
+
+    if (!stripe || !elements) {
+      return; // Stripe.js has not yet loaded.
+    }
 
     const orderData = {
       line_items: checkoutToken.line_items,
@@ -28,13 +35,12 @@ const PaymentForm = ({ checkoutToken, shippingData, backStep, onCaptureCheckout,
       fulfillment: { shipping_method: shippingData.shippingOption },
       payment: {
         gateway: 'manual',
-        manual: { payment_method_id: 'manual_payment_id' }, 
+        manual: { payment_method_id: 'manual_payment_id' },
       },
     };
 
     onCaptureCheckout(checkoutToken.id, orderData);
-    nextStep(); 
-
+    nextStep();
   };
 
   return (
@@ -44,20 +50,16 @@ const PaymentForm = ({ checkoutToken, shippingData, backStep, onCaptureCheckout,
         Payment Method
       </Typography>
       <Elements stripe={stripePromise}>
-        <ElementsConsumer>
-          {({ elements, stripe }) => (
-            <form onSubmit={handleSubmit}>
-              <CardElement />
-              <br /><br />
-              <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                <Button variant="outlined" onClick={backStep}>Back</Button>
-                <Button type="submit" variant="contained" color="primary">
-                  Pay {checkoutToken.subtotal.formatted_with_symbol}
-                </Button>
-              </div>
-            </form>
-          )}
-        </ElementsConsumer>
+        <form onSubmit={handleSubmit}>
+          <CardElement />
+          <br /><br />
+          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+            <Button variant="outlined" onClick={backStep}>Back</Button>
+            <Button type="submit" variant="contained" color="primary">
+              Pay {checkoutToken.subtotal.formatted_with_symbol}
+            </Button>
+          </div>
+        </form>
       </Elements>
     </>
   );

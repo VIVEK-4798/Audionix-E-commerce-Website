@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Typography, Stepper, Step, StepLabel, Divider, Button, CircularProgress, CssBaseline } from '@mui/material';
-import { Link, useNavigate } from 'react-router-dom'; 
+import { Link, useNavigate } from 'react-router-dom';
 import { makeStyles } from '@mui/styles';
 import { CustomContainer as Container, CustomPaper as Paper } from './styles';
 import AddressForm from './AddressForm';
-import PaymentForm from './PaymentForm'; 
+import PaymentForm from './PaymentForm';
 import { commerce } from '../../lib/commerce';
 
 const steps = ['Shipping address', 'Payment details'];
@@ -26,20 +26,19 @@ const Checkout = ({ cart, order, onCaptureCheckout, error }) => {
   const [activeStep, setActiveStep] = useState(0);
   const [checkoutToken, setCheckoutToken] = useState(null);
   const [shippingData, setShippingData] = useState({});
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
 
   useEffect(() => {
     const generateToken = async () => {
       try {
         const token = await commerce.checkout.generateToken(cart.id, { type: 'cart' });
         setCheckoutToken(token);
-        console.log(token);
       } catch (error) {
-        navigate('/'); 
+        navigate('/');
       }
     };
     generateToken();
-  }, [cart, navigate]); 
+  }, [cart, navigate]);
 
   const nextStep = () => setActiveStep((prevActiveStep) => prevActiveStep + 1);
   const backStep = () => setActiveStep((prevActiveStep) => prevActiveStep - 1);
@@ -64,8 +63,7 @@ const Checkout = ({ cart, order, onCaptureCheckout, error }) => {
       <CircularProgress />
     </div>
   );
-    // As I was not able to use the Stripe API, beacause it's asking for the subscription, 
-    // the order was not placed and we had to show the fake version of the confirmation.
+
   if (error) {
     Confirmation = () => (
       <>
@@ -89,7 +87,6 @@ const Checkout = ({ cart, order, onCaptureCheckout, error }) => {
   return (
     <>
       <CssBaseline />
-      <div />
       <Container>
         <Paper>
           <Typography variant='h4' align='center'>Checkout</Typography>
@@ -104,9 +101,7 @@ const Checkout = ({ cart, order, onCaptureCheckout, error }) => {
             {activeStep === steps.length ? (
               <Confirmation />
             ) : checkoutToken && (
-              <div>
-                <Form />
-              </div>
+              <Form />
             )}
           </div>
         </Paper>
