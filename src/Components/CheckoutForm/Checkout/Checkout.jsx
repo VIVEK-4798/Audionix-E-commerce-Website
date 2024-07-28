@@ -5,8 +5,12 @@ import { styled } from '@mui/system';
 import AddressForm from './AddressForm';
 import PaymentForm from './PaymentForm';
 import { commerce } from '../../lib/commerce';
+import { Elements } from '@stripe/react-stripe-js';
+import { loadStripe } from '@stripe/stripe-js';
 
 const steps = ['Shipping address', 'Payment details'];
+
+const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLIC_KEY);
 
 const Container = styled('div')(({ theme }) => ({
   marginTop: theme.spacing(8),
@@ -88,13 +92,20 @@ const Checkout = ({ cart, order, onCaptureCheckout, error }) => {
     );
   }
 
-  const Form = () => (activeStep === 0 ? 
-    <AddressForm checkoutToken={checkoutToken} next={next} />
-     : <PaymentForm shippingData={shippingData} 
-                    checkoutToken={checkoutToken} 
-                    nextStep={nextStep}
-                    backStep={backStep}
-                    onCaptureCheckout={onCaptureCheckout}/>                
+  const Form = () => (
+    activeStep === 0 ? (
+      <AddressForm checkoutToken={checkoutToken} next={next} />
+    ) : (
+      <Elements stripe={stripePromise}>
+        <PaymentForm
+          shippingData={shippingData}
+          checkoutToken={checkoutToken}
+          nextStep={nextStep}
+          backStep={backStep}
+          onCaptureCheckout={onCaptureCheckout}
+        />
+      </Elements>
+    )
   );
 
   return (

@@ -1,10 +1,8 @@
+// PaymentForm.jsx
 import React from 'react';
 import { Typography, Button, Divider } from '@mui/material';
-import { Elements, CardElement, useElements, useStripe } from '@stripe/react-stripe-js';
-import { loadStripe } from '@stripe/stripe-js';
+import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js';
 import Review from './Review';
-
-const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLIC_KEY);
 
 const PaymentForm = ({ checkoutToken, shippingData, backStep, onCaptureCheckout, nextStep }) => {
   const elements = useElements();
@@ -49,18 +47,16 @@ const PaymentForm = ({ checkoutToken, shippingData, backStep, onCaptureCheckout,
       <Typography variant="h6" gutterBottom style={{ margin: '20px 0' }}>
         Payment Method
       </Typography>
-      <Elements stripe={stripePromise}>
-        <form onSubmit={handleSubmit}>
-          <CardElement />
-          <br /><br />
-          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-            <Button variant="outlined" onClick={backStep}>Back</Button>
-            <Button type="submit" variant="contained" color="primary">
-              Pay {checkoutToken.subtotal.formatted_with_symbol}
-            </Button>
-          </div>
-        </form>
-      </Elements>
+      <form onSubmit={handleSubmit}>
+        <CardElement />
+        <br /><br />
+        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+          <Button variant="outlined" onClick={backStep}>Back</Button>
+          <Button type="submit" variant="contained" color="primary">
+            Pay {checkoutToken.subtotal.formatted_with_symbol}
+          </Button>
+        </div>
+      </form>
     </>
   );
 };
