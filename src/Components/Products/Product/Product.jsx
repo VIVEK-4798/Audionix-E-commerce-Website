@@ -1,15 +1,36 @@
-import React from 'react'
+import React from 'react';
 import { Card, CardMedia, CardContent, CardActions, Typography, IconButton } from '@mui/material';
 import { AddShoppingCart } from '@mui/icons-material';
+import { makeStyles } from '@mui/styles';
 
-import useStyle from './styles';
+const useStyles = makeStyles((theme) => ({
+  root: {
+    maxWidth: '100%',
+  },
+  media: {
+    height: 0,
+    paddingTop: '56.25%', // 16:9 aspect ratio
+  },
+  cardContent: {
+    display: 'flex',
+    justifyContent: 'space-between',
+  },
+  cardActions: {
+    display: 'flex',
+    justifyContent: 'flex-end',
+  },
+}));
 
 const Product = ({ product, onAddToCart }) => {
-  const classes = useStyle();
+  const classes = useStyles();
 
   return (
     <Card className={classes.root}>
-      <CardMedia className={classes.media} image={product.image.url} title={product.name} />
+      <CardMedia
+        className={classes.media}
+        image={product.image.url}
+        title={product.name}
+      />
       <CardContent>
         <div className={classes.cardContent}>
           <Typography variant="h5" gutterBottom>
@@ -27,7 +48,7 @@ const Product = ({ product, onAddToCart }) => {
         </IconButton>
       </CardActions>
     </Card>
-  )
-}
+  );
+};
 
 export default Product;

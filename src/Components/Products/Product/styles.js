@@ -1,6 +1,6 @@
 import { makeStyles } from '@mui/styles';
 
-export default makeStyles(() => ({
+const useStyles = makeStyles(() => ({
   root: {
     maxWidth: '100%',
   },
@@ -17,3 +17,5 @@ export default makeStyles(() => ({
     justifyContent: 'space-between',
   },
 }));
+
+export default useStyles;

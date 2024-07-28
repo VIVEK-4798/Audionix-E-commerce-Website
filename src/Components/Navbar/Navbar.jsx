@@ -12,7 +12,13 @@ const Navbar = ({ totalItems }) => {
     <>
       <AppBarStyled position="fixed" color="inherit">
         <Toolbar>
-          <Typography component={Link} to="/" variant="h6" color="inherit" style={{ textDecoration: 'none', flexGrow: 1, display: 'flex', alignItems: 'center' }}>
+          <Typography
+            component={Link}
+            to="/"
+            variant="h6"
+            color="inherit"
+            style={{ textDecoration: 'none', flexGrow: 1, display: 'flex', alignItems: 'center' }}
+          >
             <Image src={logo} alt="ShopSphere" height="25px" />
             Audionix
           </Typography>

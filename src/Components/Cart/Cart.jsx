@@ -1,7 +1,7 @@
 import React from 'react';
 import { Container, Typography, Grid, Button } from '@mui/material';
 import { styled } from '@mui/system';
-import { Link } from 'react-router-dom'; // Ensure correct import
+import { Link } from 'react-router-dom';
 import CartItem from './CartItem/CartItem';
 
 // Styled components
@@ -51,7 +51,11 @@ const Cart = ({ cart, loading, onUpdateCartQty, onRemoveFromCart, onEmptyCart })
       <Grid container spacing={3}>
         {currentCart.line_items.map((item) => (
           <Grid item xs={12} sm={4} key={item.id}>
-            <CartItem item={item} onUpdateCartQty={onUpdateCartQty} onRemoveFromCart={onRemoveFromCart} />
+            <CartItem
+              item={item}
+              onUpdateCartQty={onUpdateCartQty}
+              onRemoveFromCart={onRemoveFromCart}
+            />
           </Grid>
         ))}
       </Grid>

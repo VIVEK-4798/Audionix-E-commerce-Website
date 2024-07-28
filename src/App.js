@@ -71,12 +71,10 @@ function App() {
         <Navbar totalItems={cart?.total_items || 0} />
         <Routes>
           <Route
-            exact
             path="/"
             element={<Products products={products} onAddToCart={handleAddToCart} />}
           />
           <Route
-            exact
             path="/cart"
             element={
               <Cart
@@ -89,7 +87,6 @@ function App() {
             }
           />
           <Route
-            exact
             path="/checkout"
             element={
               <Checkout
