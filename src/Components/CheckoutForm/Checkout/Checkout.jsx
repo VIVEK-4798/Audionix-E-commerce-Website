@@ -1,28 +1,41 @@
 import React, { useState, useEffect } from 'react';
 import { Typography, Stepper, Step, StepLabel, Divider, Button, CircularProgress, CssBaseline } from '@mui/material';
 import { Link, useNavigate } from 'react-router-dom';
-import { makeStyles } from '@mui/styles';
-import { CustomContainer as Container, CustomPaper as Paper } from './styles';
+import { styled } from '@mui/system';
 import AddressForm from './AddressForm';
 import PaymentForm from './PaymentForm';
 import { commerce } from '../../lib/commerce';
 
 const steps = ['Shipping address', 'Payment details'];
 
-const useStyles = makeStyles((theme) => ({
-  divider: {
-    margin: '20px 0',
-  },
-  spinner: {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    height: '100vh',
+const Container = styled('div')(({ theme }) => ({
+  marginTop: theme.spacing(8),
+  marginBottom: theme.spacing(8),
+}));
+
+const Paper = styled('div')(({ theme }) => ({
+  marginTop: theme.spacing(3),
+  marginBottom: theme.spacing(3),
+  padding: theme.spacing(2),
+  [theme.breakpoints.up(600 + theme.spacing(3) * 2)]: {
+    marginTop: theme.spacing(6),
+    marginBottom: theme.spacing(6),
+    padding: theme.spacing(3),
   },
 }));
 
+const DividerStyled = styled(Divider)(({ theme }) => ({
+  margin: '20px 0',
+}));
+
+const Spinner = styled('div')({
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  height: '100vh',
+});
+
 const Checkout = ({ cart, order, onCaptureCheckout, error }) => {
-  const classes = useStyles();
   const [activeStep, setActiveStep] = useState(0);
   const [checkoutToken, setCheckoutToken] = useState(null);
   const [shippingData, setShippingData] = useState({});
@@ -52,16 +65,16 @@ const Checkout = ({ cart, order, onCaptureCheckout, error }) => {
     <>
       <div>
         <Typography variant='h5'>Thank You for your purchase, {order.customer.firstname} {order.customer.lastname}</Typography>
-        <Divider className={classes.divider} />
+        <DividerStyled />
         <Typography variant='subtitle2'>Order ref: {order.customer_reference}</Typography>
       </div>
       <br />
       <Button component={Link} to="/" variant="outlined" type="button">Back to Home</Button>
     </>
   ) : (
-    <div className={classes.spinner}>
+    <Spinner>
       <CircularProgress />
-    </div>
+    </Spinner>
   );
 
   if (error) {
