@@ -1,34 +1,19 @@
 import { styled } from '@mui/system';
+import { AppBar as MuiAppBar } from '@mui/material';
 import { alpha } from '@mui/material/styles';
 
-const drawerWidth = 0;
-
-export const AppBarStyled = styled('div')(({ theme }) => ({
+export const AppBarStyled = styled(MuiAppBar)(({ theme }) => ({
   boxShadow: 'none',
   borderBottom: '1px solid rgba(0, 0, 0, 0.12)',
+  width: '100%',
   [theme.breakpoints.up('sm')]: {
-    width: `calc(100% - ${drawerWidth}px)`,
-    marginLeft: drawerWidth,
+    width: '100%',
   },
 }));
-
-export const Title = styled('div')({
-  flexGrow: 1,
-  alignItems: 'center',
-  display: 'flex',
-  textDecoration: 'none',
-});
 
 export const Image = styled('img')({
   marginRight: '10px',
 });
-
-export const MenuButton = styled('button')(({ theme }) => ({
-  marginRight: theme.spacing(2),
-  [theme.breakpoints.up('sm')]: {
-    display: 'none',
-  },
-}));
 
 export const Grow = styled('div')({
   flexGrow: 1,

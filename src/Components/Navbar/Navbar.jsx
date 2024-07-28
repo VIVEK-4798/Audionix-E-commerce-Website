@@ -2,7 +2,7 @@ import React from 'react';
 import { AppBar, Toolbar, IconButton, Badge, Typography } from '@mui/material';
 import { ShoppingCart } from '@mui/icons-material';
 import logo from '../../assets/logo.png';
-import { AppBarStyled, Title, Image, Grow } from './styles';
+import { AppBarStyled, Image, Grow } from './styles';
 import { Link, useLocation } from 'react-router-dom';
 
 const Navbar = ({ totalItems }) => {
